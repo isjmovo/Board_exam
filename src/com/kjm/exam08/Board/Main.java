@@ -6,6 +6,7 @@ public class Main {
   public static void main(String[] args) {
 
     Scanner sc = new Scanner(System.in);
+    int num = 0;
 
     System.out.println("===== 프로그램 실행 =====");
     System.out.println("===== 게시판 v 0.1 =====");
@@ -17,8 +18,6 @@ public class Main {
       System.out.println("입력된 명령: " + cmd);
 
       if (cmd.equals("/usr/article/write")) {
-
-        int num = 0;
 
         System.out.println("===== 게시물 등록 =====");
 
@@ -39,9 +38,9 @@ public class Main {
       else {
 
       }
-      sc.close();
-
-      System.out.println("===== 프로그램 종료 =====");
     }
+    System.out.println("===== 프로그램 종료 =====");
+
+    sc.close();
   }
 }
