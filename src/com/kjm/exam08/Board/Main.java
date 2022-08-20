@@ -25,25 +25,25 @@ public class Main {
 
         System.out.printf("제목: ");
         String title = sc.nextLine();
-        article.title = title;
 
         System.out.printf("내용: ");
         String content = sc.nextLine();
-        article.content = content;
 
         num++;
+
+        article.title = title;
+        article.content = content;
         article.num = num;
-        System.out.println(num + "번째 게시물이 등록되었습니다.");
+
+        System.out.printf("%d번째 게시물이 입력되었습니다.\n", article.num);
+        System.out.println(article);
       }
 
       else if (cmd.equals("exit")) {
         break;
       }
-
-      else {
-
-      }
     }
+
     System.out.println("===== 프로그램 종료 =====");
 
     sc.close();
