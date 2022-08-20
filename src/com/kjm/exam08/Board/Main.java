@@ -6,8 +6,6 @@ public class Main {
   public static void main(String[] args) {
 
     Scanner sc = new Scanner(System.in);
-
-    Article article = new Article();
     int num = 0;
 
     System.out.println("===== 프로그램 실행 =====");
@@ -31,12 +29,10 @@ public class Main {
 
         num++;
 
-        article.title = title;
-        article.content = content;
-        article.num = num;
+        Article ac = new Article(num, title, content);
 
-        System.out.printf("%d번째 게시물이 입력되었습니다.\n", article.num);
-        System.out.println(article);
+        System.out.printf("%d번째 게시물이 입력되었습니다.\n", ac.num);
+        System.out.println(ac);
       }
 
       else if (cmd.equals("exit")) {
@@ -55,6 +51,11 @@ class Article {
   String title;
   String content;
 
+  Article (int num, String title, String content) {
+    this.num = num;
+    this.title = title;
+    this.content = content;
+  }
   @Override
   public String toString() {
     return String.format("{num: %d, title: %s, content: %s}", num, title, content);
