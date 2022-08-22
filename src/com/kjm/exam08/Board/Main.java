@@ -44,7 +44,7 @@ public class Main {
         Article ac = new Article(num, title, content);
         lastAc = ac;
 
-
+        articles.add(ac);
         System.out.printf("%d번째 게시물이 입력되었습니다.\n", ac.num);
         System.out.println(ac);
       }
