@@ -1,13 +1,26 @@
 package com.kjm.exam08.Board;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+  static void makeTestData(ArrayList<Article> articles) {
+    articles.add(new Article(1, "제목1", "내용1"));
+  }
   public static void main(String[] args) {
 
     Scanner sc = new Scanner(System.in);
     int num = 0;
     Article lastAc = null;
+    ArrayList<Article> articles = new ArrayList<>();
+
+    makeTestData(articles);
+
+    if (articles.size() > 0) {
+      num = articles.get(articles.size() - 1).num;
+
+    }
 
     System.out.println("===== 프로그램 실행 =====");
     System.out.println("===== 게시판 v 0.1 =====");
@@ -31,6 +44,7 @@ public class Main {
         Article ac = new Article(num, title, content);
         lastAc = ac;
 
+
         System.out.printf("%d번째 게시물이 입력되었습니다.\n", ac.num);
         System.out.println(ac);
       }
@@ -43,6 +57,19 @@ public class Main {
         if (lastAc == null) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
+        }
+
+        else if (cmd.equals("/usr/article/list")) {
+
+          System.out.println("===== 게시물 리스트 =====");
+          System.out.println("-------------------------");
+          System.out.println("  번호  |  제목  |  내용  ");
+
+          for (int i = articles.size() - 1; i >= 0; i--) {
+            Article ac = articles.get(i);
+            System.out.printf("    %d   |   %s   |   %s   \n", ac.num, ac.title, ac.content);
+          }
+          System.out.println("-------------------------");
         }
 
         Article ac = lastAc;
