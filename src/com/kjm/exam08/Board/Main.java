@@ -12,7 +12,6 @@ public class Main {
 
     Scanner sc = new Scanner(System.in);
     int num = 0;
-    Article lastAc = null;
     ArrayList<Article> articles = new ArrayList<>();
 
     makeTestData(articles);
@@ -42,7 +41,6 @@ public class Main {
         num++;
 
         Article ac = new Article(num, title, content);
-        lastAc = ac;
 
         articles.add(ac);
         System.out.printf("%d번째 게시물이 입력되었습니다.\n", ac.num);
@@ -54,10 +52,12 @@ public class Main {
       }
 
       else if (cmd.equals("/usr/article/detail")) {
-        if (lastAc == null) {
+        if (articles.isEmpty()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
+
+
 
         else if (cmd.equals("/usr/article/list")) {
 
@@ -72,13 +72,13 @@ public class Main {
           System.out.println("-------------------------");
         }
 
-        Article ac = lastAc;
+        Article ac = articles.get(articles.size() - 1);
 
         System.out.println("===== 게시물 상세 내용 =====");
 
-        System.out.printf("번호: %d\n", lastAc.num);
-        System.out.printf("제목: %s\n", lastAc.title);
-        System.out.printf("내용: %s\n", lastAc.content);
+        System.out.printf("번호: %d\n", ac.num);
+        System.out.printf("제목: %s\n", ac.title);
+        System.out.printf("내용: %s\n", ac.content);
       }
 
       else {
