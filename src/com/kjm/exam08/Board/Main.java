@@ -1,18 +1,19 @@
 package com.kjm.exam08.Board;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-  static void makeTestData(ArrayList<Article> articles) {
+  static void makeTestData(List<Article> articles) {
     articles.add(new Article(1, "제목1", "내용1"));
   }
   public static void main(String[] args) {
 
     Scanner sc = new Scanner(System.in);
     int num = 0;
-    ArrayList<Article> articles = new ArrayList<>();
+    List<Article> articles = new ArrayList<>();
 
     makeTestData(articles);
 
