@@ -5,18 +5,22 @@ import java.util.*;
 public class Main {
 
   static void makeTestData(List<Article> articles) {
-    articles.add(new Article(0, "제목1", "내용1"));
+    articles.add(new Article(1, "제목1", "내용1"));
+    articles.add(new Article(2, "제목2", "내용2"));
+    articles.add(new Article(3, "제목3", "내용3"));
   }
+
   public static void main(String[] args) {
 
     Scanner sc = new Scanner(System.in);
-    int num = 0;
+    int articleLastnum = 0;
+
     List<Article> articles = new ArrayList<>();
 
     makeTestData(articles);
 
     if (articles.size() > 0) {
-      num = articles.get(articles.size() - 1).num;
+      articleLastnum = articles.get(articles.size() - 1).num;
 
     }
 
@@ -28,9 +32,23 @@ public class Main {
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);
+      Map<String, String> params = rq.getParams();
 
       if (cmd.equals("exit")) {
         break;
+      }
+
+      else if (rq.getUrlPath().equals("/usr/article/list")) {
+
+        System.out.println("===== 게시물 리스트 =====");
+        System.out.println("-------------------------");
+        System.out.println("  번호  |  제목  |  내용  ");
+
+        for (int i = articles.size() - 1; i >= 0; i--) {
+          Article article = articles.get(i);
+          System.out.printf("    %d   |   %s   |   %s   \n", article.num, article.title, article.content);
+        }
+        System.out.println("-------------------------");
       }
 
       else if (rq.getUrlPath().equals("/usr/article/write")) {
@@ -42,44 +60,32 @@ public class Main {
 
         System.out.printf("내용: ");
         String content = sc.nextLine();
+        int num = articleLastnum + 1;
+        articleLastnum = num;
 
-        num++;
+        Article article = new Article(num, title, content);
 
-        Article ac = new Article(num, title, content);
-
-        articles.add(ac);
-        System.out.printf("%d번째 게시물이 입력되었습니다.\n", ac.num);
-        System.out.println(ac);
+        articles.add(article);
+        System.out.printf("%d번째 게시물이 입력되었습니다.\n", article.num);
+        System.out.println(article);
       }
 
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
-        if (articles.isEmpty()) {
+
+        int num = Integer.parseInt(params.get("num"));
+
+        Article article = articles.get(num - 1);
+
+        if (num > articles.size()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
 
-
-
-        else if (rq.getUrlPath().equals("/usr/article/list")) {
-
-          System.out.println("===== 게시물 리스트 =====");
-          System.out.println("-------------------------");
-          System.out.println("  번호  |  제목  |  내용  ");
-
-          for (int i = articles.size() - 1; i >= 0; i--) {
-            Article ac = articles.get(i);
-            System.out.printf("    %d   |   %s   |   %s   \n", ac.num, ac.title, ac.content);
-          }
-          System.out.println("-------------------------");
-        }
-
-        Article ac = articles.get(articles.size() - 1);
-
         System.out.println("===== 게시물 상세 내용 =====");
 
-        System.out.printf("번호: %d\n", ac.num);
-        System.out.printf("제목: %s\n", ac.title);
-        System.out.printf("내용: %s\n", ac.content);
+        System.out.printf("번호: %d\n", article.num);
+        System.out.printf("제목: %s\n", article.title);
+        System.out.printf("내용: %s\n", article.content);
       }
 
       else {
