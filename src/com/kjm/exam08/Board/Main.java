@@ -72,7 +72,20 @@ public class Main {
 
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
 
-        int num = Integer.parseInt(params.get("num"));
+        if (params.containsKey("num") == false) {
+          System.out.println("num을 입력해주세요.");
+          continue;
+        }
+
+        int num = 0;
+
+        try {
+          num = Integer.parseInt(params.get("num"));
+        }
+        catch (NumberFormatException e) {
+          System.out.println("num을 정수 형태로 입력해주세요.");
+          continue;
+        }
 
         Article article = articles.get(num - 1);
 
