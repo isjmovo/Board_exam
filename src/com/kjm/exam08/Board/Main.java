@@ -45,6 +45,8 @@ public class Main {
         System.out.println("  번호  |  제목  |  내용  ");
         System.out.println("-------------------------");
 
+        List<Article> sortedArticles = articles;
+
         boolean orderBynumDesc = true;
 
         if (params.containsKey("orderBy") && params.get("orderBy").equals("numAsc")) {
@@ -52,15 +54,11 @@ public class Main {
         }
 
         if (orderBynumDesc) {
-          for (int i = articles.size() - 1; i >= 0; i--) {
-            Article article = articles.get(i);
-            System.out.printf("    %d   |   %s   |   %s   \n", article.num, article.title, article.content);
-          }
+          sortedArticles = Util.reverseList(sortedArticles);
         }
-        else {
-          for (Article article : articles) {
-            System.out.printf("    %d   |   %s   |   %s   \n", article.num, article.title, article.content);
-          }
+
+        for (Article article : sortedArticles) {
+          System.out.printf("    %d   |   %s   |   %s   \n", article.num, article.title, article.content);
         }
       }
 
@@ -185,5 +183,14 @@ class Util {
 
   static String getUrlPathFromUrl(String url) {
     return url.split("\\?", 2)[0];
+  }
+
+  public static<T> List<T> reverseList(List<T> list) {
+    List<T> reverse = new ArrayList<>(list.size());
+
+    for (int i = list.size() - 1; i >= 0; i--) {
+      reverse.add(list.get(i));
+    }
+    return reverse;
   }
 }
