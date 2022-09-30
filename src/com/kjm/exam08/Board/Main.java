@@ -5,9 +5,10 @@ import java.util.*;
 public class Main {
 
   static void makeTestData(List<Article> articles) {
-    articles.add(new Article(1, "제목1", "내용1"));
-    articles.add(new Article(2, "제목2", "내용2"));
-    articles.add(new Article(3, "제목3", "내용3"));
+    for (int i = 0; i < 100; i++) {
+      int num = i + 1;
+      articles.add(new Article(num, "제목" + num, "내용" + num));
+    }
   }
 
   public static void main(String[] args) {
