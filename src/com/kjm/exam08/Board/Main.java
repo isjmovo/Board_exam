@@ -63,34 +63,7 @@ public class Main {
       }
 
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
-
-        if (params.containsKey("num") == false) {
-          System.out.println("num을 입력해주세요.");
-          continue;
-        }
-
-        int num = 0;
-
-        try {
-          num = Integer.parseInt(params.get("num"));
-        }
-        catch (NumberFormatException e) {
-          System.out.println("num을 정수 형태로 입력해주세요.");
-          continue;
-        }
-
-        Article article = articles.get(num - 1);
-
-        if (num > articles.size()) {
-          System.out.println("게시물이 존재하지 않습니다.");
-          continue;
-        }
-
-        System.out.println("===== 게시물 상세 내용 =====");
-
-        System.out.printf("번호: %d\n", article.num);
-        System.out.printf("제목: %s\n", article.title);
-        System.out.printf("내용: %s\n", article.content);
+        actionUserArticleDetail(rq, articles);
       }
 
       else {
@@ -101,6 +74,39 @@ public class Main {
     System.out.println("===== 프로그램 종료 =====");
 
     sc.close();
+  }
+
+  private static void actionUserArticleDetail(Rq rq,List<Article> articles) {
+
+    Map<String, String> params = rq.getParams();
+
+    if (params.containsKey("num") == false) {
+      System.out.println("num을 입력해주세요.");
+      return;
+    }
+
+    int num = 0;
+
+    try {
+      num = Integer.parseInt(params.get("num"));
+    }
+    catch (NumberFormatException e) {
+      System.out.println("num을 정수 형태로 입력해주세요.");
+      return;
+    }
+
+    Article article = articles.get(num - 1);
+
+    if (num > articles.size()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    System.out.println("===== 게시물 상세 내용 =====");
+
+    System.out.printf("번호: %d\n", article.num);
+    System.out.printf("제목: %s\n", article.title);
+    System.out.printf("내용: %s\n", article.content);
   }
 
   private static void actionUserArticleList(Rq rq, List<Article> articles) {
