@@ -14,14 +14,14 @@ public class Main {
   public static void main(String[] args) {
 
     Scanner sc = new Scanner(System.in);
-    int articleLastnum = 0;
+    int articleLastNum = 0;
 
     List<Article> articles = new ArrayList<>();
 
     makeTestData(articles);
 
     if (articles.size() > 0) {
-      articleLastnum = articles.get(articles.size() - 1).num;
+      articleLastNum = articles.get(articles.size() - 1).num;
 
     }
 
@@ -44,22 +44,7 @@ public class Main {
       }
 
       else if (rq.getUrlPath().equals("/usr/article/write")) {
-
-        System.out.println("===== 게시물 등록 =====");
-
-        System.out.printf("제목: ");
-        String title = sc.nextLine();
-
-        System.out.printf("내용: ");
-        String content = sc.nextLine();
-        int num = articleLastnum + 1;
-        articleLastnum = num;
-
-        Article article = new Article(num, title, content);
-
-        articles.add(article);
-        System.out.printf("%d번째 게시물이 입력되었습니다.\n", article.num);
-        System.out.println(article);
+        actionUserArticleWrite(sc, articleLastNum, articles);
       }
 
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
@@ -76,7 +61,24 @@ public class Main {
     sc.close();
   }
 
-  private static void actionUserArticleDetail(Rq rq,List<Article> articles) {
+  public static void actionUserArticleWrite(Scanner sc, int articleLastNum, List<Article> articles) {
+    System.out.println("===== 게시물 등록 =====");
+
+    System.out.printf("제목: ");
+    String title = sc.nextLine();
+
+    System.out.printf("내용: ");
+    String content = sc.nextLine();
+    int num = ++articleLastNum;
+
+    Article article = new Article(num, title, content);
+
+    articles.add(article);
+    System.out.printf("%d번째 게시물이 입력되었습니다.\n", article.num);
+    System.out.println("생성된 게시물 객체: " + article);
+  }
+
+  public static void actionUserArticleDetail(Rq rq,List<Article> articles) {
 
     Map<String, String> params = rq.getParams();
 
@@ -109,7 +111,7 @@ public class Main {
     System.out.printf("내용: %s\n", article.content);
   }
 
-  private static void actionUserArticleList(Rq rq, List<Article> articles) {
+  public static void actionUserArticleList(Rq rq, List<Article> articles) {
     System.out.println("===== 게시물 리스트 =====");
     System.out.println("-------------------------");
     System.out.println("  번호  |  제목  |  내용  ");
