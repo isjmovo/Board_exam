@@ -82,14 +82,21 @@ public class Main {
       return;
     }
 
-    Article article = articles.get(num - 1);
+    Article foundArticle = null;
 
-    if (num > articles.size()) {
-      System.out.println("게시물이 존재하지 않습니다.");
+    for (Article article : articles) {
+      if (article.num == num) {
+        foundArticle = article;
+        break;
+      }
+    }
+
+    if (foundArticle == null) {
+      System.out.printf("%d번 게시물이 존재하지 않습니다.\n", num);
       return;
     }
 
-    articles.remove(article);
+    articles.remove(foundArticle);
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", num);
   }
 
