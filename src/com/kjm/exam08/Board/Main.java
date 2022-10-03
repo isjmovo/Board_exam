@@ -45,6 +45,7 @@ public class Main {
 
       else if (rq.getUrlPath().equals("/usr/article/write")) {
         actionUserArticleWrite(sc, articleLastNum, articles);
+        articleLastNum++;
       }
 
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
