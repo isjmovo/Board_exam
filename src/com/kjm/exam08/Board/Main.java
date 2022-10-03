@@ -40,16 +40,19 @@ public class Main {
       }
 
       else if (rq.getUrlPath().equals("/usr/article/list")) {
-        actionUserArticleList(rq, articles);
+        actionUsrArticleList(rq, articles);
       }
 
       else if (rq.getUrlPath().equals("/usr/article/write")) {
-        actionUserArticleWrite(sc, articleLastNum, articles);
+        actionUsrArticleWrite(sc, articleLastNum, articles);
         articleLastNum++;
       }
 
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
-        actionUserArticleDetail(rq, articles);
+        actionUsrArticleDetail(rq, articles);
+      }
+      else if (rq.getUrlPath().equals("/usr/article/modify")) {
+        actionUsrArticleModify(rq, articles, sc);
       }
 
       else {
@@ -62,7 +65,40 @@ public class Main {
     sc.close();
   }
 
-  public static void actionUserArticleWrite(Scanner sc, int articleLastNum, List<Article> articles) {
+  private static void actionUsrArticleModify(Rq rq, List<Article> articles, Scanner sc) {
+    Map<String, String> params = rq.getParams();
+
+    if (params.containsKey("num") == false) {
+      System.out.println("num을 입력해주세요.");
+      return;
+    }
+
+    int num = 0;
+
+    try {
+      num = Integer.parseInt(params.get("num"));
+    }
+    catch (NumberFormatException e) {
+      System.out.println("num을 정수 형태로 입력해주세요.");
+      return;
+    }
+
+    Article article = articles.get(num - 1);
+
+    if (num > articles.size()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    System.out.printf("새 제목: ");
+    article.title = sc.nextLine();
+    System.out.printf("새 내용: ");
+    article.content = sc.nextLine();
+
+    System.out.printf("%d번 게시물을 수정하였습니다.\n", article.num);
+  }
+
+  public static void actionUsrArticleWrite(Scanner sc, int articleLastNum, List<Article> articles) {
     System.out.println("===== 게시물 등록 =====");
 
     System.out.printf("제목: ");
@@ -79,7 +115,7 @@ public class Main {
     System.out.println("생성된 게시물 객체: " + article);
   }
 
-  public static void actionUserArticleDetail(Rq rq,List<Article> articles) {
+  public static void actionUsrArticleDetail(Rq rq,List<Article> articles) {
 
     Map<String, String> params = rq.getParams();
 
@@ -112,7 +148,7 @@ public class Main {
     System.out.printf("내용: %s\n", article.content);
   }
 
-  public static void actionUserArticleList(Rq rq, List<Article> articles) {
+  public static void actionUsrArticleList(Rq rq, List<Article> articles) {
     System.out.println("===== 게시물 리스트 =====");
     System.out.println("-------------------------");
     System.out.println("  번호  |  제목  |  내용  ");
