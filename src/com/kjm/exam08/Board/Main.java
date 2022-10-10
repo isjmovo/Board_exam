@@ -15,7 +15,7 @@ public class Main {
 
   public static void main(String[] args) {
 
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = Container.sc;
 
     makeTestData();
 
@@ -41,13 +41,13 @@ public class Main {
         actionUsrArticleList(rq);
       }
       else if (rq.getUrlPath().equals("/usr/article/write")) {
-        actionUsrArticleWrite(sc);
+        actionUsrArticleWrite();
       }
       else if (rq.getUrlPath().equals("/usr/article/detail")) {
         actionUsrArticleDetail(rq);
       }
       else if (rq.getUrlPath().equals("/usr/article/modify")) {
-        actionUsrArticleModify(rq, sc);
+        actionUsrArticleModify(rq);
       }
       else if (rq.getUrlPath().equals("/usr/article/delete")) {
         actionUsrArticleDelete(rq);
@@ -98,7 +98,7 @@ public class Main {
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", num);
   }
 
-  private static void actionUsrArticleModify(Rq rq, Scanner sc) {
+  private static void actionUsrArticleModify(Rq rq) {
     Map<String, String> params = rq.getParams();
 
     if (params.containsKey("num") == false) {
@@ -116,29 +116,36 @@ public class Main {
       return;
     }
 
-    Article article = articles.get(num - 1);
+    Article foundArticle = null;
 
-    if (num > articles.size()) {
-      System.out.println("게시물이 존재하지 않습니다.");
+    for (Article article : articles) {
+      if (article.num == num) {
+        foundArticle = article;
+        break;
+      }
+    }
+
+    if (foundArticle == null) {
+      System.out.printf("%d번 게시물이 존재하지 않습니다.\n", num);
       return;
     }
 
     System.out.printf("새 제목: ");
-    article.title = sc.nextLine();
+    foundArticle.title = Container.sc.nextLine();
     System.out.printf("새 내용: ");
-    article.content = sc.nextLine();
+    foundArticle.content = Container.sc.nextLine();
 
-    System.out.printf("%d번 게시물을 수정하였습니다.\n", article.num);
+    System.out.printf("%d번 게시물을 수정하였습니다.\n", num);
   }
 
-  public static void actionUsrArticleWrite(Scanner sc) {
+  public static void actionUsrArticleWrite() {
     System.out.println("===== 게시물 등록 =====");
 
     System.out.printf("제목: ");
-    String title = sc.nextLine();
+    String title = Container.sc.nextLine();
 
     System.out.printf("내용: ");
-    String content = sc.nextLine();
+    String content = Container.sc.nextLine();
 
     int num = ++articleLastNum;
     articleLastNum = num;
