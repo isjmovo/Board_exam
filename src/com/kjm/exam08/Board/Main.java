@@ -3,8 +3,8 @@ package com.kjm.exam08.Board;
 import java.util.*;
 
 public class Main {
-  static int articleLastNum = 0;
-  static List<Article> articles = new ArrayList<>();
+  static int articleLastNum;
+  static List<Article> articles;
 
   static void makeTestData() {
     for (int i = 0; i < 100; i++) {
@@ -13,6 +13,10 @@ public class Main {
     }
   }
 
+  static {
+    articleLastNum = 0;
+    articles = new ArrayList<>();
+  }
   public static void main(String[] args) {
 
     Scanner sc = Container.sc;
